@@ -5,7 +5,7 @@
     <title>NetSuite Tool - Bookmark Generator</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f4f7f9; margin: 0; padding: 30px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .card { background: #fff; padding: 28px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 450px; }
+        .card { background: #fff; padding: 28px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 480px; }
         h2 { color: #0070d2; font-size: 18px; margin-top: 0; text-align: center; margin-bottom: 20px; }
         .form-group { margin-bottom: 16px; }
         label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 6px; color: #333; }
@@ -13,7 +13,11 @@
         .preview-area { background: #f0f7ff; border: 2px dashed #0070d2; padding: 20px; border-radius: 6px; margin-top: 25px; text-align: center; }
         .bookmark-btn { display: inline-block; background: #ff9800; color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: grab; transition: background 0.2s; }
         .bookmark-btn:hover { background: #f57c00; }
-        .instructions { font-size: 11px; color: #555; margin-top: 15px; line-height: 1.5; text-align: left; background: #fafafa; padding: 10px; border-radius: 4px; border: 1px solid #eee; }
+        .instructions { font-size: 12px; color: #444; margin-top: 20px; line-height: 1.5; background: #fafafa; padding: 14px; border-radius: 6px; border: 1px solid #e0e0e0; }
+        .instructions h4 { margin: 0 0 8px 0; color: #0070d2; font-size: 13px; }
+        .instructions ol { margin: 0; padding-left: 18px; }
+        .instructions li { margin-bottom: 6px; }
+        .instructions li:last-child { margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -227,16 +231,17 @@
     </div>
 
     <div class="preview-area">
-        <label style="margin-bottom: 10px; color: #0070d2;">👇 Drag this button to your Bookmarks Bar 👇</label>
+        <label style="margin-bottom: 10px; color: #0070d2; font-weight: bold;">👇 Drag this button to your Bookmarks Bar 👇</label>
         <a id="dynamic_bookmark" class="bookmark-btn" href="#">⚡ Calculator — Aiza Dalmacion (PM) [designer]</a>
     </div>
 
-    <div class="instructions">
-        <strong>How to share this with your team:</strong>
-        <ol style="margin: 5px 0 0 -15px; padding-left: 15px;">
-            <li>Save this code as an HTML file and share it with your team.</li>
-            <li>Select your name, shift, and paste the path.</li>
-            <li>Drag the orange button to your bookmarks bar!</li>
+<div class="instructions">
+        <h4>📖 How to Setup & Use</h4>
+        <ol>
+            <li><strong>Initial Setup:</strong> Select your name, shift, and paste the field path (preserves case-sensitivity). Drag the orange button directly to your browser's Bookmarks Bar.</li>
+            <li><strong>Opening in NetSuite:</strong> Open any NetSuite Opportunity or Quote record, then click your <strong>⚡ Calculator</strong> bookmark.</li>
+            <li><strong>Calculating Prices:</strong> Select or type plaque sizes and proof source. The tool auto-detects location fees (Canada / AK / HI), EVG / Partnership fees, and oversized dimensions.</li>
+            <li><strong>Applying Values:</strong> Click <strong>Apply to NetSuite</strong> to automatically fill in the price, designer name, proof source, and publication link path.</li>
         </ol>
     </div>
 </div>
