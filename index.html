@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NetSuite Tool - Bookmark Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f9; margin: 0; padding: 30px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: #fff; padding: 28px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 450px; }
+        h2 { color: #0070d2; font-size: 18px; margin-top: 0; text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 6px; color: #333; }
+        select, input[type="text"] { width: 100%; padding: 9px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; background: #fff; outline: none; }
+        .preview-area { background: #f0f7ff; border: 2px dashed #0070d2; padding: 20px; border-radius: 6px; margin-top: 25px; text-align: center; }
+        .bookmark-btn { display: inline-block; background: #ff9800; color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: grab; transition: background 0.2s; }
+        .bookmark-btn:hover { background: #f57c00; }
+        .instructions { font-size: 11px; color: #555; margin-top: 15px; line-height: 1.5; text-align: left; background: #fafafa; padding: 10px; border-radius: 4px; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>NetSuite Calculator Setup</h2>
+    
+    <div class="form-group">
+        <label>Select Your Name (Designer Roster):</label>
+        <select id="designer_name" onchange="updateBookmark()">
+            <option value="Abigail Morelos">Abigail Morelos</option>
+            <option value="Aiza Dalmacion" selected>Aiza Dalmacion</option>
+            <option value="Alive Redimo">Alive Redimo</option>
+            <option value="Alliyah Claire Empig">Alliyah Claire Empig</option>
+            <option value="ALVIN RONQUILLO">ALVIN RONQUILLO</option>
+            <option value="Anecito S. Obal Jr">Anecito S. Obal Jr</option>
+            <option value="Angelica Agao">Angelica Agao</option>
+            <option value="Angelica Lagado">Angelica Lagado</option>
+            <option value="Anna Rose Cambiador">Anna Rose Cambiador</option>
+            <option value="Apple Lyn S. Gauten">Apple Lyn S. Gauten</option>
+            <option value="April-Rose De Guzman">April-Rose De Guzman</option>
+            <option value="Arben Jay Molina Albus">Arben Jay Molina Albus</option>
+            <option value="Arfel Tuazon">Arfel Tuazon</option>
+            <option value="Aris Sermonit">Aris Sermonit</option>
+            <option value="Arnold S. Obal">Arnold S. Obal</option>
+            <option value="Bon Ryan Francisco">Bon Ryan Francisco</option>
+            <option value="Brennan Cahilig">Brennan Cahilig</option>
+            <option value="Brian G. Rodillo">Brian G. Rodillo</option>
+            <option value="Camille dizon">Camille dizon</option>
+            <option value="Camille Espineda">Camille Espineda</option>
+            <option value="CARLA JANE L. SEGUIENTE">CARLA JANE L. SEGUIENTE</option>
+            <option value="Catherine Grace Sison">Catherine Grace Sison</option>
+            <option value="Catherine Joy Condat">Catherine Joy Condat</option>
+            <option value="Christelle Navera">Christelle Navera</option>
+            <option value="Christian Louie Cadiz">Christian Louie Cadiz</option>
+            <option value="Christine Joy Ronquillo">Christine Joy Ronquillo</option>
+            <option value="Cielo Mae B. Cezar">Cielo Mae B. Cezar</option>
+            <option value="Daniel Pamiloza">Daniel Pamiloza</option>
+            <option value="Daniel San Roque Paz">Daniel San Roque Paz</option>
+            <option value="Darell Floranda">Darell Floranda</option>
+            <option value="Daryll D. Delima">Daryll D. Delima</option>
+            <option value="Denisse T. Dig">Denisse T. Dig</option>
+            <option value="Denvert Dellosa">Denvert Dellosa</option>
+            <option value="Denvert M. Dellosa">Denvert M. Dellosa</option>
+            <option value="Diosua Collamar">Diosua Collamar</option>
+            <option value="Don Jhey Patoc">Don Jhey Patoc</option>
+            <option value="Edgardo De Leon Santos Jr. ">Edgardo De Leon Santos Jr. </option>
+            <option value="Eldimir Manalo">Eldimir Manalo</option>
+            <option value="Elemar Cadalin">Elemar Cadalin</option>
+            <option value="Ellica Chris Onggoco">Ellica Chris Onggoco</option>
+            <option value="Emman Sapinit">Emman Sapinit</option>
+            <option value="Enrique Rivera">Enrique Rivera</option>
+            <option value="Estevez, John Kenneth">Estevez, John Kenneth</option>
+            <option value="Eumer Cahilig">Eumer Cahilig</option>
+            <option value="Evelyn Oldan">Evelyn Oldan</option>
+            <option value="Fitz Darren Herrera">Fitz Darren Herrera</option>
+            <option value="Florante Gurion Jr.">Florante Gurion Jr.</option>
+            <option value="Gerald Petere">Gerald Petere</option>
+            <option value="Germuel Lopez">Germuel Lopez</option>
+            <option value="Harold James L. Hostalero">Harold James L. Hostalero</option>
+            <option value="Iris Esguerra">Iris Esguerra</option>
+            <option value="Janeth Madrona">Janeth Madrona</option>
+            <option value="Jay R Forbes">Jay R Forbes</option>
+            <option value="Jayson M. Cachapero">Jayson M. Cachapero</option>
+            <option value="Jedaya Bilawan">Jedaya Bilawan</option>
+            <option value="Jefferson Blanca">Jefferson Blanca</option>
+            <option value="Jefferson Ruel Dangan">Jefferson Ruel Dangan</option>
+            <option value="Jeffrey Manalastas">Jeffrey Manalastas</option>
+            <option value="JENNIELYN JOYCE V. PREGO">JENNIELYN JOYCE V. PREGO</option>
+            <option value="Jenny Aganon">Jenny Aganon</option>
+            <option value="Jennyvie Pamiloza">Jennyvie Pamiloza</option>
+            <option value="Jerome Albus">Jerome Albus</option>
+            <option value="Jerome E. Tejares">Jerome E. Tejares</option>
+            <option value="Jerome Escalante">Jerome Escalante</option>
+            <option value="Jerryl Jem Hilario">Jerryl Jem Hilario</option>
+            <option value="Jess Anthony Dayawon">Jess Anthony Dayawon</option>
+            <option value="Jhan Alfred C. Alberca">Jhan Alfred C. Alberca</option>
+            <option value="Jhay Cambiador">Jhay Cambiador</option>
+            <option value="Jhenrie A. Atienza">Jhenrie A. Atienza</option>
+            <option value="Jhoan Shane Navarez">Jhoan Shane Navarez</option>
+            <option value="Jhomel Del G. Sison">Jhomel Del G. Sison</option>
+            <option value="Jhon Michael Febrer">Jhon Michael Febrer</option>
+            <option value="Jhune Mel Cerdeniola">Jhune Mel Cerdeniola</option>
+            <option value="Jihan Mahusay">Jihan Mahusay</option>
+            <option value="Jillian April Natividad">Jillian April Natividad</option>
+            <option value="Jim Roi Dolores">Jim Roi Dolores</option>
+            <option value="Jinky Llorente">Jinky Llorente</option>
+            <option value="Jirah Joy Amor Baculio">Jirah Joy Amor Baculio</option>
+            <option value="Jireh John Faller">Jireh John Faller</option>
+            <option value="Joan Leocadio">Joan Leocadio</option>
+            <option value="Joatham Aaron Sy">Joatham Aaron Sy</option>
+            <option value="Jocris Tanate">Jocris Tanate</option>
+            <option value="John Benedict D. Oppus">John Benedict D. Oppus</option>
+            <option value="John Emerson C.Bumagat">John Emerson C.Bumagat</option>
+            <option value="John Harry Gaspar">John Harry Gaspar</option>
+            <option value="John Kenneth Alarcon">John Kenneth Alarcon</option>
+            <option value="John Matthew M. Corpuz">John Matthew M. Corpuz</option>
+            <option value="John Nicole Olarita">John Nicole Olarita</option>
+            <option value="John Patrick Oraya">John Patrick Oraya</option>
+            <option value="John Ray Curiano">John Ray Curiano</option>
+            <option value="Johnmark F. Miranda">Johnmark F. Miranda</option>
+            <option value="Jomar M. Dela Cruz">Jomar M. Dela Cruz</option>
+            <option value="Jonah Mae H. Sancha">Jonah Mae H. Sancha</option>
+            <option value="Jonathan Inonog">Jonathan Inonog</option>
+            <option value="Jordan Calubayan">Jordan Calubayan</option>
+            <option value="Joshua Austria">Joshua Austria</option>
+            <option value="Joshua Miguel Galang">Joshua Miguel Galang</option>
+            <option value="Joyce Ann Martinez">Joyce Ann Martinez</option>
+            <option value="Julian Christopher Lalic">Julian Christopher Lalic</option>
+            <option value="Julieto Halos">Julieto Halos</option>
+            <option value="Justine Sugarol">Justine Sugarol</option>
+            <option value="Katrina Calado">Katrina Calado</option>
+            <option value="kenneth Estevez">kenneth Estevez</option>
+            <option value="Kenneth Liwanag">Kenneth Liwanag</option>
+            <option value="Kimberly Alba">Kimberly Alba</option>
+            <option value="KING ANDREW LIMJAP">KING ANDREW LIMJAP</option>
+            <option value="Klarrise Antonio">Klarrise Antonio</option>
+            <option value="Kris Angelo Alba">Kris Angelo Alba</option>
+            <option value="Laurence Robert Baturiano">Laurence Robert Baturiano</option>
+            <option value="Lawrence Nicandro">Lawrence Nicandro</option>
+            <option value="Legie Aileen Valdez">Legie Aileen Valdez</option>
+            <option value="Leland S. San Juan">Leland S. San Juan</option>
+            <option value="Leomar Tagle">Leomar Tagle</option>
+            <option value="Levi Villamil">Levi Villamil</option>
+            <option value="Lito S. Dellamas">Lito S. Dellamas</option>
+            <option value="Liza Dalmacion">Liza Dalmacion</option>
+            <option value="Loy C. Yton">Loy C. Yton</option>
+            <option value="Ma. Eloisa Miñas">Ma. Eloisa Miñas</option>
+            <option value="Madelaine Doronio">Madelaine Doronio</option>
+            <option value="Maila Angela D. Abendan">Maila Angela D. Abendan</option>
+            <option value="Marc Joshua Abendan">Marc Joshua Abendan</option>
+            <option value="Marcus Raimund Da jose">Marcus Raimund Da jose</option>
+            <option value="Mardilyn Bongalan Simo">Mardilyn Bongalan Simo</option>
+            <option value="maria">maria</option>
+            <option value="Maria Janine Mesa">Maria Janine Mesa</option>
+            <option value="Maribel Dela Cruz">Maribel Dela Cruz</option>
+            <option value="Marivic Tenorio">Marivic Tenorio</option>
+            <option value="Mark Levy Santos">Mark Levy Santos</option>
+            <option value="Mark Rogel Salas">Mark Rogel Salas</option>
+            <option value="Mark Willam Mee">Mark Willam Mee</option>
+            <option value="Marlon Barbacena">Marlon Barbacena</option>
+            <option value="Marlon T. Cristobal">Marlon T. Cristobal</option>
+            <option value="Mary Angelu Solis">Mary Angelu Solis</option>
+            <option value="Mary Anne Amante">Mary Anne Amante</option>
+            <option value="Matias Daniel Teh">Matias Daniel Teh</option>
+            <option value="May Gielyn Portillo">May Gielyn Portillo</option>
+            <option value="Mellow Eborda">Mellow Eborda</option>
+            <option value="Melodei M. Lipio">Melodei M. Lipio</option>
+            <option value="Merry Joy Aguilar">Merry Joy Aguilar</option>
+            <option value="Meynard Jermaine P. Duran">Meynard Jermaine P. Duran</option>
+            <option value="Mhonciar Regis">Mhonciar Regis</option>
+            <option value="Michael Ibarrientos">Michael Ibarrientos</option>
+            <option value="Michael S. Espina">Michael S. Espina</option>
+            <option value="Michael S. Ibarrientos">Michael S. Ibarrientos</option>
+            <option value="Micko Ezekiel D. Lucero">Micko Ezekiel D. Lucero</option>
+            <option value="Mico Almenario">Mico Almenario</option>
+            <option value="mildred yarte">mildred yarte</option>
+            <option value="Monica Lerry Santiago">Monica Lerry Santiago</option>
+            <option value="Neil Patrick Cristobal">Neil Patrick Cristobal</option>
+            <option value="Nicole Paningbatan">Nicole Paningbatan</option>
+            <option value="Niño Carmelo Castilla">Niño Carmelo Castilla</option>
+            <option value="Niño Vargas">Niño Vargas</option>
+            <option value="Noel Baltazar">Noel Baltazar</option>
+            <option value="Oscar Gauten">Oscar Gauten</option>
+            <option value="Querubene Santos">Querubene Santos</option>
+            <option value="RALPH SANTOS">RALPH SANTOS</option>
+            <option value="Raymart Sibayan">Raymart Sibayan</option>
+            <option value="RD De Guzman">RD De Guzman</option>
+            <option value="Reiniel Villones">Reiniel Villones</option>
+            <option value="Reniel Tiñana">Reniel Tiñana</option>
+            <option value="Renzen Alejo">Renzen Alejo</option>
+            <option value="Rheynald Josh Abaquita">Rheynald Josh Abaquita</option>
+            <option value="Rica Mae Dumalaon">Rica Mae Dumalaon</option>
+            <option value="Richelle De Guzman">Richelle De Guzman</option>
+            <option value="Robria Domingo">Robria Domingo</option>
+            <option value="Rocquel Gali">Rocquel Gali</option>
+            <option value="Rogine Caberte">Rogine Caberte</option>
+            <option value="Roland Paul Opigal">Roland Paul Opigal</option>
+            <option value="Rona E. Milan">Rona E. Milan</option>
+            <option value="Ronniel T. Boydon">Ronniel T. Boydon</option>
+            <option value="Rosemarie Biscayda">Rosemarie Biscayda</option>
+            <option value="Rosemarie Mulig">Rosemarie Mulig</option>
+            <option value="Rutchelle Refuerzo">Rutchelle Refuerzo</option>
+            <option value="Ryan Jay Nacubuan">Ryan Jay Nacubuan</option>
+            <option value="Ryan Russel Suba">Ryan Russel Suba</option>
+            <option value="SHAYLA TARROZA">SHAYLA TARROZA</option>
+            <option value="Socorro Fatima Sison">Socorro Fatima Sison</option>
+            <option value="Steven Carl Audal">Steven Carl Audal</option>
+            <option value="Steven John Padriguez">Steven John Padriguez</option>
+            <option value="Tweety G. Zuñiga">Tweety G. Zuñiga</option>
+            <option value="Veneza Dela Cruz">Veneza Dela Cruz</option>
+            <option value="Vermac Castro">Vermac Castro</option>
+            <option value="Veronica Barcelon">Veronica Barcelon</option>
+            <option value="Wennalee Lyxen Espina">Wennalee Lyxen Espina</option>
+            <option value="Wyeth Blanco">Wyeth Blanco</option>
+            <option value="Xavier Daniel">Xavier Daniel</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Select Your Shift:</label>
+        <select id="shift_option" onchange="updateBookmark()">
+            <option value="PM" selected>PM</option>
+            <option value="AM">AM</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Publication Link Field Path:</label>
+        <input type="text" id="preview_pub_link" placeholder="e.g. /tgn-proof-pages/2026/September/09-17-2026/Arfel/" oninput="updateBookmark()">
+    </div>
+
+    <div class="preview-area">
+        <label style="margin-bottom: 10px; color: #0070d2;">👇 Drag this button to your Bookmarks Bar 👇</label>
+        <a id="dynamic_bookmark" class="bookmark-btn" href="#">⚡ Calculator — Aiza Dalmacion (PM) [designer]</a>
+    </div>
+
+    <div class="instructions">
+        <strong>How to share this with your team:</strong>
+        <ol style="margin: 5px 0 0 -15px; padding-left: 15px;">
+            <li>Save this code as an HTML file and share it with your team.</li>
+            <li>Select your name, shift, and paste the path.</li>
+            <li>Drag the orange button to your bookmarks bar!</li>
+        </ol>
+    </div>
+</div>
+
+<script>
+function updateBookmark() {
+    var name = document.getElementById('designer_name').value;
+    var shift = document.getElementById('shift_option').value;
+    var rawLink = document.getElementById('preview_pub_link').value.trim();
+
+    var folderName = name;
+    if (rawLink) {
+        var cleanPath = rawLink.replace(/\/+$|\?.*$/g, '');
+        var parts = cleanPath.split('/');
+        var extracted = parts.pop();
+        if (extracted) {
+            folderName = extracted;
+        }
+    }
+
+    var code = `javascript:(function(){` +
+        `var ds=` + JSON.stringify(name) + `;` +
+        `var shift=` + JSON.stringify(shift) + `;` +
+        `var folderName=` + JSON.stringify(folderName) + `;` +
+        `var old=document.getElementById('ns_calc_modal');if(old)old.remove();` +
+        `var pm={"9x12":224,"12x14":224,"12x16":224,"12x18":224,"12x20":224,"12x24":224,"14x16":224,"14x18":224,"14x20":254,"14x28":254,"14x30":254,"15x24":254,"16x18":224,"16x20":254,"16x22":254,"16x28":254,"16x30":254,"16x36":254,"18x20":254,"18x24":254,"18x30":284,"18x36":284,"20x22":254,"20x24":254,"20x28":284,"20x40":314,"22x22":254,"22x24":254,"22x30":284,"22x34":314,"22x40":344,"24x24":314,"24x28":344,"24x30":344,"24x34":374,"24x36":374,"24x40":404,"26x28":374,"26x30":374,"26x32":404,"30x30":374,"30x34":374,"30x40":434,"22x44":624,"30x52":684,"30x54":684,"30x60":684,"30x62":684,"40x40":684,"40x42":684,"44x44":714};` +
+        `var overSized=["22x44","30x52","30x54","30x60","30x62","40x40","40x42","44x44"];` +
+        `function normalizeKey(str){var clean=String(str||'').toLowerCase().trim().replace(/\\s+/g,'');var parts=clean.split('x');if(parts.length===2&&!isNaN(parts[0])&&!isNaN(parts[1])){var n1=parseInt(parts[0],10);var n2=parseInt(parts[1],10);if(n1>n2)return n2+'x'+n1;}return clean;}` +
+        `var box=document.createElement('div');box.id='ns_calc_modal';box.style.cssText='position:fixed;top:12%;right:20px;z-index:999999;background:#fff;border:2px solid #0070d2;padding:18px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-family:Sans-serif;width:290px;color:#333;';` +
+        `box.innerHTML='<h3 style="margin:0 0 12px 0;font-size:16px;color:#0070d2;text-align:center;">Proof & Price Calculator</h3><div id="calc_notice" style="display:none;background:#ffebee;border:2px solid #d93025;color:#d93025;padding:12px;border-radius:6px;font-size:13px;font-weight:bold;margin-bottom:12px;text-align:center;line-height:1.4;">NOTICE:<br>Proof in Lucinda Black & Acrylic only</div><div id="single_size_container" style="position:relative;margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Plaque Size:</label><input type="text" id="calc_sz_input" value="12x18" autocomplete="off" placeholder="Type or select size..." style="width:93%;padding:7px;font-size:13px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="calc_drop" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:160px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Proof Source:</label><select id="calc_proof_src" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="Custom Graphic">Custom Graphic</option><option value="Online/PDF" selected>Online/PDF</option><option value="Scan/Print">Scan/Print</option><option value="Proof Made Using Weblink V2">Proof Made Using Weblink V2</option></select></div><div style="margin-bottom:12px;background:#f9f9f9;padding:8px;border-radius:4px;border:1px solid #e5e5e5;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:6px;cursor:pointer;color:#0070d2;"><input type="checkbox" id="chk_enable_plaques" style="margin-right:6px;"> Number of Plaques & Pages Option</label><div id="container_plaques" style="display:none;margin-top:6px;"><div style="margin-bottom:6px;"><select id="calc_num_plaques" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="2" selected>2 Plaques</option><option value="3">3 Plaques</option></select></div><div id="pages_wrap" style="position:relative;margin-bottom:6px;"><input type="text" id="calc_pages" value="10" autocomplete="off" placeholder="Select or type pages..." style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_pages" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div id="multi_sizes_container" style="display:none;margin-top:6px;"><div style="font-size:11px;font-weight:bold;margin-bottom:4px;color:#555;">Plaque Sizes:</div><div style="position:relative;margin-bottom:6px;"><input type="text" id="p_sz_1" value="12x18" autocomplete="off" placeholder="Plaque 1 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_1" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="position:relative;margin-bottom:6px;"><input type="text" id="p_sz_2" value="12x18" autocomplete="off" placeholder="Plaque 2 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_2" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="position:relative;margin-bottom:4px;"><input type="text" id="p_sz_3" value="12x18" autocomplete="off" placeholder="Plaque 3 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_3" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div></div></div></div><div style="font-size:12px;margin-bottom:12px;"><label style="display:block;margin-bottom:4px;cursor:pointer;"><input type="checkbox" id="chk_ca" value="25"> CA / AK / HI (+$25)</label><label style="display:block;cursor:pointer;"><input type="checkbox" id="chk_evg" value="30"> EVG / Partnership (+$30)</label></div><div id="calc_breakdown" style="background:#eef6fc;border:1px solid #b3d7ff;border-radius:4px;padding:8px;font-size:11px;color:#004085;margin-bottom:12px;line-height:1.4;"></div><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Final Price ($):</label><input type="number" id="calc_tot" style="width:93%;padding:6px;font-size:14px;font-weight:bold;margin-bottom:14px;border-radius:4px;border:1px solid #ccc;"><button id="btn_apply" tabindex="0" style="width:100%;background:#0070d2;color:#fff;border:none;padding:8px;border-radius:4px;font-weight:bold;cursor:pointer;margin-bottom:6px;outline:none;">Apply to NetSuite</button><button id="btn_cancel" tabindex="0" style="width:100%;background:#eee;color:#333;border:none;padding:6px;border-radius:4px;cursor:pointer;outline:none;">Cancel</button>';` +
+        `document.body.appendChild(box);` +
+        `var inp=document.getElementById('calc_sz_input'),drop=document.getElementById('calc_drop'),notice=document.getElementById('calc_notice'),chkCa=document.getElementById('chk_ca'),chkEvg=document.getElementById('chk_evg'),chkEnablePlaques=document.getElementById('chk_enable_plaques'),containerPlaques=document.getElementById('container_plaques'),numPlaquesSel=document.getElementById('calc_num_plaques'),pagesInp=document.getElementById('calc_pages'),dropPages=document.getElementById('drop_pages'),singleSizeCont=document.getElementById('single_size_container'),multiSizesCont=document.getElementById('multi_sizes_container'),pagesWrap=document.getElementById('pages_wrap'),pSz1=document.getElementById('p_sz_1'),pSz2=document.getElementById('p_sz_2'),pSz3=document.getElementById('p_sz_3'),drop1=document.getElementById('drop_1'),drop2=document.getElementById('drop_2'),drop3=document.getElementById('drop_3'),bdEl=document.getElementById('calc_breakdown');` +
+        `var banners=document.querySelectorAll('[id*="custbody_location"], .uir-field-wrapper');banners.forEach(function(b){var txt=(b.innerText||'').toLowerCase();if(txt.indexOf('location')!==-1||b.id.indexOf('custbody_location')!==-1){if(txt.indexOf('canada')!==-1||txt.indexOf('alaska')!==-1||txt.indexOf('hawaii')!==-1)chkCa.checked=true;if(txt.indexOf('evg')!==-1||txt.indexOf('partnership')!==-1)chkEvg.checked=true;}});` +
+        `chkEnablePlaques.onchange=function(){containerPlaques.style.display=chkEnablePlaques.checked?'block':'none';updatePlaqueMode();recalc();};` +
+        `numPlaquesSel.onchange=function(){updatePlaqueMode();recalc();};` +
+        `function updatePlaqueMode(){var np=parseInt(numPlaquesSel.value,10)||2;if(chkEnablePlaques.checked&&np===3){singleSizeCont.style.display='none';multiSizesCont.style.display='block';pagesWrap.style.display='none';}else{singleSizeCont.style.display='block';multiSizesCont.style.display='none';pagesWrap.style.display='block';}}` +
+        `function setupDropdown(inputEl,dropEl,callback){function render(filter){var html='';var rawFilter=String(filter||'').toLowerCase().trim().replace(/\\s+/g,'');var normFilter=normalizeKey(rawFilter);for(var k in pm){var parts=k.split('x');var revK=parts[1]+'x'+parts[0];if(!rawFilter||k.indexOf(rawFilter)!==-1||revK.indexOf(rawFilter)!==-1||k.indexOf(normFilter)!==-1){var singleP=pm[k]||224;if(overSized.indexOf(k)!==-1)singleP+=250;html+='<div class="sz_opt" data-val="'+k+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+k+' ($'+Math.round(singleP)+')</div>';if(parts[0]!==parts[1]){html+='<div class="sz_opt" data-val="'+revK+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+revK+' ($'+Math.round(singleP)+')</div>';}}}dropEl.innerHTML=html||'<div style="padding:6px;font-size:11px;color:#888;">No match</div>';var opts=dropEl.querySelectorAll('.sz_opt');for(var i=0;i<opts.length;i++){opts[i].onmousedown=function(e){e.preventDefault();inputEl.value=this.getAttribute('data-val');dropEl.style.display='none';if(callback)callback();};opts[i].onmouseover=function(){this.style.background='#f0f7ff';};opts[i].onmouseout=function(){this.style.background='#fff';};}}inputEl.onfocus=function(){render(inputEl.value);dropEl.style.display='block';};inputEl.oninput=function(){render(inputEl.value);dropEl.style.display='block';if(callback)callback();};inputEl.onblur=function(){setTimeout(function(){if(document.activeElement!==inputEl && !dropEl.contains(document.activeElement)){dropEl.style.display='none';}},250);};}setupDropdown(inp,drop,recalc);setupDropdown(pSz1,drop1,recalc);setupDropdown(pSz2,drop2,recalc);setupDropdown(pSz3,drop3,recalc);` +
+        `function setupPagesDropdown(){function renderPages(filter){var html='';for(var p=7;p<=18;p++){var diff=p-10;var pPrice=644+(diff*30);if(!filter || String(p).indexOf(String(filter).trim())!==-1){html+='<div class="pg_opt" data-val="'+p+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+p+' Pages ($'+pPrice+')</div>';}}dropPages.innerHTML=html||'<div style="padding:6px;font-size:11px;color:#888;">No match</div>';var opts=dropPages.querySelectorAll('.pg_opt');for(var i=0;i<opts.length;i++){opts[i].onmousedown=function(e){e.preventDefault();pagesInp.value=this.getAttribute('data-val');dropPages.style.display='none';recalc();};opts[i].onmouseover=function(){this.style.background='#f0f0ff';};opts[i].onmouseout=function(){this.style.background='#fff';};}}pagesInp.onfocus=function(){renderPages(pagesInp.value);dropPages.style.display='block';};pagesInp.oninput=function(){renderPages(pagesInp.value);dropPages.style.display='block';recalc();};pagesInp.onblur=function(){setTimeout(function(){if(document.activeElement!==pagesInp && !dropPages.contains(document.activeElement)){dropPages.style.display='none';}},250);};}setupPagesDropdown();` +
+        `var applyBtn=document.getElementById('btn_apply'),cancelBtn=document.getElementById('btn_cancel');` +
+        `function recalc(){` +
+            `var np=parseInt(numPlaquesSel.value,10)||2;var isOver=false;var bdText="";var base=0;` +
+            `var a1=chkCa.checked?25:0;var a2=chkEvg.checked?30:0;` +
+            `if(!chkEnablePlaques.checked){` +
+                `var k=normalizeKey(inp.value);var rawP=pm[k]||224;` +
+                `if(overSized.indexOf(k)!==-1){isOver=true;base=rawP+250;bdText="Base Price ($"+rawP+") + $250 (Oversized Fee)";}` +
+                `else{base=rawP;bdText="Base Price ($"+rawP+")";}` +
+            `}else if(np===2){` +
+                `var k=normalizeKey(inp.value);var pg=parseInt(pagesInp.value,10)||10;var diff=pg-10;var p2Base=644+(diff*30);` +
+                `if(overSized.indexOf(k)!==-1){isOver=true;base=p2Base+250;bdText="2 Plaques ("+pg+" pgs: $"+p2Base+") + $250 (Oversized Fee)";}` +
+                `else{base=p2Base;bdText="2 Plaques ("+pg+" pages Base: $"+p2Base+")";}` +
+            `}else if(np===3){` +
+                `var k1=normalizeKey(pSz1.value),k2=normalizeKey(pSz2.value),k3=normalizeKey(pSz3.value);` +
+                `var p1=pm[k1]||224;if(overSized.indexOf(k1)!==-1){p1+=250;isOver=true;}` +
+                `var p2=pm[k2]||224;if(overSized.indexOf(k2)!==-1){p2+=250;isOver=true;}` +
+                `var p3=pm[k3]||224;if(overSized.indexOf(k3)!==-1){p3+=250;isOver=true;}` +
+                `base=p1+p2+p3;` +
+                `bdText="P1: $"+p1+(overSized.indexOf(k1)!==-1?" [+$250 OS]":"")+" + P2: $"+p2+(overSized.indexOf(k2)!==-1?" [+$250 OS]":"")+" + P3: $"+p3+(overSized.indexOf(k3)!==-1?" [+$250 OS]":"");` +
+            `}` +
+            `if(a1>0)bdText+=" + CA/AK/HI ($25)";` +
+            `if(a2>0)bdText+=" + EVG ($30)";` +
+            `bdEl.innerHTML="<strong>Breakdown:</strong><br>"+bdText;` +
+            `if(isOver){notice.style.display='block';}else{notice.style.display='none';}` +
+            `if(base>0)document.getElementById('calc_tot').value=Math.round(base+a1+a2);` +
+        `}` +
+        `recalc();document.addEventListener('click',function eH(e){if(!box.contains(e.target)){drop.style.display='none';drop1.style.display='none';drop2.style.display='none';drop3.style.display='none';dropPages.style.display='none';}});` +
+        `chkCa.onchange=recalc;chkEvg.onchange=recalc;cancelBtn.onclick=function(){box.remove();};` +
+        `function executeApply(){` +
+            `var calcPrice=document.getElementById('calc_tot').value;var ps=document.getElementById('calc_proof_src').value;box.remove();` +
+            `var d=new Date();var utc=d.getTime()+(d.getTimezoneOffset()*60000);var phtDate=new Date(utc+(3600000*8));var shiftDate=new Date(phtDate);` +
+            `if(shiftDate.getHours()<12){shiftDate.setDate(shiftDate.getDate()-1);}` +
+            `var m=["January","February","March","April","May","June","July","August","September","October","November","December"];` +
+            `var y=shiftDate.getFullYear();var mn=m[shiftDate.getMonth()];var mm=("0"+(shiftDate.getMonth()+1)).slice(-2);var dd=("0"+shiftDate.getDate()).slice(-2);` +
+            `var opp="";var elId=document.querySelector('.uir-record-id,[class*="uir-record-id"]');if(elId){opp=elId.innerText.trim().replace(/[D]/g,'');}` +
+            `if(!opp){var tr=document.querySelector('#tranid,input[name="tranid"]');if(tr)opp=tr.value.trim();}` +
+            `var pl="/tgn-proof-pages/"+y+"/"+mn+"/"+mm+"-"+dd+"-"+y+"/"+folderName+"/"+opp;` +
+            `var pr=String(Math.round(parseFloat(calcPrice)||224));` +
+            `try{if(typeof nlapiSetFieldValue==='function'){nlapiSetFieldValue('custbody33',pr);nlapiSetFieldValue('custbodypublication_link',pl);if(calcPrice)nlapiSetFieldValue('price',calcPrice);}}catch(e){}` +
+            `function tf(s,v){var el=document.querySelector(s);if(el&&v){el.focus();el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));el.dispatchEvent(new Event('blur',{bubbles:true}));}}` +
+            `tf('#custbody33',pr);tf('input[name="custbody33"]',pr);` +
+            `tf('#custbodypublication_link',pl);tf('input[name="custbodypublication_link"]',pl);` +
+            `tf('input[id*="inpt_custbody95"]',ps);tf('input[name*="inpt_custbody95"]',ps);` +
+            `tf('input[id*="inpt_custbody163"]',ds);tf('input[name*="inpt_custbody163"]',ds);` +
+            `if(calcPrice){tf('#custbody_calculated_price',calcPrice);tf('input[name="custbody_calculated_price"]',calcPrice);}` +
+        `}` +
+        `applyBtn.onclick=executeApply;` +
+    `})();`;
+
+    var btn = document.getElementById('dynamic_bookmark');
+    btn.href = code;
+    btn.innerText = "⚡ Calculator — " + name + " (" + shift + ") [designer]";
+}
+
+window.onload = updateBookmark;
+</script>
+
+</body>
+</html>
