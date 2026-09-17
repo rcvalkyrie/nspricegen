@@ -1,0 +1,2 @@
+# nspricegen
+yeah, price gen
