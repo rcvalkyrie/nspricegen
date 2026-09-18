@@ -235,7 +235,7 @@
         <a id="dynamic_bookmark" class="bookmark-btn" href="#">⚡ Calculator — Aiza Dalmacion (PM) [designer]</a>
     </div>
 
-<div class="instructions">
+    <div class="instructions">
         <h4>📖 How to Setup & Use</h4>
         <ol>
             <li><strong>Initial Setup:</strong> Select your name, shift, and paste the field path (preserves case-sensitivity). Drag the orange button directly to your browser's Bookmarks Bar.</li>
@@ -254,7 +254,7 @@ function updateBookmark() {
 
     var folderName = name;
     if (rawLink) {
-        var cleanPath = rawLink.replace(/\/+$|\?.*$/g, '');
+        var cleanPath = rawLink.replace(/\/+$\vert{}\?.*$/g, '');
         var parts = cleanPath.split('/');
         var extracted = parts.pop();
         if (extracted) {
@@ -262,75 +262,267 @@ function updateBookmark() {
         }
     }
 
-    var code = `javascript:(function(){` +
-        `var ds=` + JSON.stringify(name) + `;` +
-        `var shift=` + JSON.stringify(shift) + `;` +
-        `var folderName=` + JSON.stringify(folderName) + `;` +
-        `var old=document.getElementById('ns_calc_modal');if(old)old.remove();` +
-        `var pm={"9x12":224,"12x14":224,"12x16":224,"12x18":224,"12x20":224,"12x24":224,"14x16":224,"14x18":224,"14x20":254,"14x28":254,"14x30":254,"15x24":254,"16x18":224,"16x20":254,"16x22":254,"16x28":254,"16x30":254,"16x36":254,"18x20":254,"18x24":254,"18x30":284,"18x36":284,"20x22":254,"20x24":254,"20x28":284,"20x40":314,"22x22":254,"22x24":254,"22x30":284,"22x34":314,"22x40":344,"24x24":314,"24x28":344,"24x30":344,"24x34":374,"24x36":374,"24x40":404,"26x28":374,"26x30":374,"26x32":404,"30x30":374,"30x34":374,"30x40":434,"22x44":624,"30x52":684,"30x54":684,"30x60":684,"30x62":684,"40x40":684,"40x42":684,"44x44":714};` +
-        `var overSized=["22x44","30x52","30x54","30x60","30x62","40x40","40x42","44x44"];` +
-        `function normalizeKey(str){var clean=String(str||'').toLowerCase().trim().replace(/\\s+/g,'');var parts=clean.split('x');if(parts.length===2&&!isNaN(parts[0])&&!isNaN(parts[1])){var n1=parseInt(parts[0],10);var n2=parseInt(parts[1],10);if(n1>n2)return n2+'x'+n1;}return clean;}` +
-        `var box=document.createElement('div');box.id='ns_calc_modal';box.style.cssText='position:fixed;top:12%;right:20px;z-index:999999;background:#fff;border:2px solid #0070d2;padding:18px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-family:Sans-serif;width:290px;color:#333;';` +
-        `box.innerHTML='<h3 style="margin:0 0 12px 0;font-size:16px;color:#0070d2;text-align:center;">Proof & Price Calculator</h3><div id="calc_notice" style="display:none;background:#ffebee;border:2px solid #d93025;color:#d93025;padding:12px;border-radius:6px;font-size:13px;font-weight:bold;margin-bottom:12px;text-align:center;line-height:1.4;">NOTICE:<br>Proof in Lucinda Black & Acrylic only</div><div id="single_size_container" style="position:relative;margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Plaque Size:</label><input type="text" id="calc_sz_input" value="12x18" autocomplete="off" placeholder="Type or select size..." style="width:93%;padding:7px;font-size:13px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="calc_drop" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:160px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Proof Source:</label><select id="calc_proof_src" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="Custom Graphic">Custom Graphic</option><option value="Online/PDF" selected>Online/PDF</option><option value="Scan/Print">Scan/Print</option><option value="Proof Made Using Weblink V2">Proof Made Using Weblink V2</option></select></div><div style="margin-bottom:12px;background:#f9f9f9;padding:8px;border-radius:4px;border:1px solid #e5e5e5;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:6px;cursor:pointer;color:#0070d2;"><input type="checkbox" id="chk_enable_plaques" style="margin-right:6px;"> Number of Plaques & Pages Option</label><div id="container_plaques" style="display:none;margin-top:6px;"><div style="margin-bottom:6px;"><select id="calc_num_plaques" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="2" selected>2 Plaques</option><option value="3">3 Plaques</option></select></div><div id="pages_wrap" style="position:relative;margin-bottom:6px;"><input type="text" id="calc_pages" value="10" autocomplete="off" placeholder="Select or type pages..." style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_pages" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div id="multi_sizes_container" style="display:none;margin-top:6px;"><div style="font-size:11px;font-weight:bold;margin-bottom:4px;color:#555;">Plaque Sizes:</div><div style="position:relative;margin-bottom:6px;"><input type="text" id="p_sz_1" value="12x18" autocomplete="off" placeholder="Plaque 1 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_1" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="position:relative;margin-bottom:6px;"><input type="text" id="p_sz_2" value="12x18" autocomplete="off" placeholder="Plaque 2 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_2" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="position:relative;margin-bottom:4px;"><input type="text" id="p_sz_3" value="12x18" autocomplete="off" placeholder="Plaque 3 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_3" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div></div></div></div><div style="font-size:12px;margin-bottom:12px;"><label style="display:block;margin-bottom:4px;cursor:pointer;"><input type="checkbox" id="chk_ca" value="25"> CA / AK / HI (+$25)</label><label style="display:block;cursor:pointer;"><input type="checkbox" id="chk_evg" value="30"> EVG / Partnership (+$30)</label></div><div id="calc_breakdown" style="background:#eef6fc;border:1px solid #b3d7ff;border-radius:4px;padding:8px;font-size:11px;color:#004085;margin-bottom:12px;line-height:1.4;"></div><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Final Price ($):</label><input type="number" id="calc_tot" style="width:93%;padding:6px;font-size:14px;font-weight:bold;margin-bottom:14px;border-radius:4px;border:1px solid #ccc;"><button id="btn_apply" tabindex="0" style="width:100%;background:#0070d2;color:#fff;border:none;padding:8px;border-radius:4px;font-weight:bold;cursor:pointer;margin-bottom:6px;outline:none;">Apply to NetSuite</button><button id="btn_cancel" tabindex="0" style="width:100%;background:#eee;color:#333;border:none;padding:6px;border-radius:4px;cursor:pointer;outline:none;">Cancel</button>';` +
-        `document.body.appendChild(box);` +
-        `var inp=document.getElementById('calc_sz_input'),drop=document.getElementById('calc_drop'),notice=document.getElementById('calc_notice'),chkCa=document.getElementById('chk_ca'),chkEvg=document.getElementById('chk_evg'),chkEnablePlaques=document.getElementById('chk_enable_plaques'),containerPlaques=document.getElementById('container_plaques'),numPlaquesSel=document.getElementById('calc_num_plaques'),pagesInp=document.getElementById('calc_pages'),dropPages=document.getElementById('drop_pages'),singleSizeCont=document.getElementById('single_size_container'),multiSizesCont=document.getElementById('multi_sizes_container'),pagesWrap=document.getElementById('pages_wrap'),pSz1=document.getElementById('p_sz_1'),pSz2=document.getElementById('p_sz_2'),pSz3=document.getElementById('p_sz_3'),drop1=document.getElementById('drop_1'),drop2=document.getElementById('drop_2'),drop3=document.getElementById('drop_3'),bdEl=document.getElementById('calc_breakdown');` +
-        `var banners=document.querySelectorAll('[id*="custbody_location"], .uir-field-wrapper');banners.forEach(function(b){var txt=(b.innerText||'').toLowerCase();if(txt.indexOf('location')!==-1||b.id.indexOf('custbody_location')!==-1){if(txt.indexOf('canada')!==-1||txt.indexOf('alaska')!==-1||txt.indexOf('hawaii')!==-1)chkCa.checked=true;if(txt.indexOf('evg')!==-1||txt.indexOf('partnership')!==-1)chkEvg.checked=true;}});` +
-        `chkEnablePlaques.onchange=function(){containerPlaques.style.display=chkEnablePlaques.checked?'block':'none';updatePlaqueMode();recalc();};` +
-        `numPlaquesSel.onchange=function(){updatePlaqueMode();recalc();};` +
-        `function updatePlaqueMode(){var np=parseInt(numPlaquesSel.value,10)||2;if(chkEnablePlaques.checked&&np===3){singleSizeCont.style.display='none';multiSizesCont.style.display='block';pagesWrap.style.display='none';}else{singleSizeCont.style.display='block';multiSizesCont.style.display='none';pagesWrap.style.display='block';}}` +
-        `function setupDropdown(inputEl,dropEl,callback){function render(filter){var html='';var rawFilter=String(filter||'').toLowerCase().trim().replace(/\\s+/g,'');var normFilter=normalizeKey(rawFilter);for(var k in pm){var parts=k.split('x');var revK=parts[1]+'x'+parts[0];if(!rawFilter||k.indexOf(rawFilter)!==-1||revK.indexOf(rawFilter)!==-1||k.indexOf(normFilter)!==-1){var singleP=pm[k]||224;if(overSized.indexOf(k)!==-1)singleP+=250;html+='<div class="sz_opt" data-val="'+k+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+k+' ($'+Math.round(singleP)+')</div>';if(parts[0]!==parts[1]){html+='<div class="sz_opt" data-val="'+revK+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+revK+' ($'+Math.round(singleP)+')</div>';}}}dropEl.innerHTML=html||'<div style="padding:6px;font-size:11px;color:#888;">No match</div>';var opts=dropEl.querySelectorAll('.sz_opt');for(var i=0;i<opts.length;i++){opts[i].onmousedown=function(e){e.preventDefault();inputEl.value=this.getAttribute('data-val');dropEl.style.display='none';if(callback)callback();};opts[i].onmouseover=function(){this.style.background='#f0f7ff';};opts[i].onmouseout=function(){this.style.background='#fff';};}}inputEl.onfocus=function(){render(inputEl.value);dropEl.style.display='block';};inputEl.oninput=function(){render(inputEl.value);dropEl.style.display='block';if(callback)callback();};inputEl.onblur=function(){setTimeout(function(){if(document.activeElement!==inputEl && !dropEl.contains(document.activeElement)){dropEl.style.display='none';}},250);};}setupDropdown(inp,drop,recalc);setupDropdown(pSz1,drop1,recalc);setupDropdown(pSz2,drop2,recalc);setupDropdown(pSz3,drop3,recalc);` +
-        `function setupPagesDropdown(){function renderPages(filter){var html='';for(var p=7;p<=18;p++){var diff=p-10;var pPrice=644+(diff*30);if(!filter || String(p).indexOf(String(filter).trim())!==-1){html+='<div class="pg_opt" data-val="'+p+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+p+' Pages ($'+pPrice+')</div>';}}dropPages.innerHTML=html||'<div style="padding:6px;font-size:11px;color:#888;">No match</div>';var opts=dropPages.querySelectorAll('.pg_opt');for(var i=0;i<opts.length;i++){opts[i].onmousedown=function(e){e.preventDefault();pagesInp.value=this.getAttribute('data-val');dropPages.style.display='none';recalc();};opts[i].onmouseover=function(){this.style.background='#f0f0ff';};opts[i].onmouseout=function(){this.style.background='#fff';};}}pagesInp.onfocus=function(){renderPages(pagesInp.value);dropPages.style.display='block';};pagesInp.oninput=function(){renderPages(pagesInp.value);dropPages.style.display='block';recalc();};pagesInp.onblur=function(){setTimeout(function(){if(document.activeElement!==pagesInp && !dropPages.contains(document.activeElement)){dropPages.style.display='none';}},250);};}setupPagesDropdown();` +
-        `var applyBtn=document.getElementById('btn_apply'),cancelBtn=document.getElementById('btn_cancel');` +
-        `function recalc(){` +
-            `var np=parseInt(numPlaquesSel.value,10)||2;var isOver=false;var bdText="";var base=0;` +
-            `var a1=chkCa.checked?25:0;var a2=chkEvg.checked?30:0;` +
-            `if(!chkEnablePlaques.checked){` +
-                `var k=normalizeKey(inp.value);var rawP=pm[k]||224;` +
-                `if(overSized.indexOf(k)!==-1){isOver=true;base=rawP+250;bdText="Base Price ($"+rawP+") + $250 (Oversized Fee)";}` +
-                `else{base=rawP;bdText="Base Price ($"+rawP+")";}` +
-            `}else if(np===2){` +
-                `var k=normalizeKey(inp.value);var pg=parseInt(pagesInp.value,10)||10;var diff=pg-10;var p2Base=644+(diff*30);` +
-                `if(overSized.indexOf(k)!==-1){isOver=true;base=p2Base+250;bdText="2 Plaques ("+pg+" pgs: $"+p2Base+") + $250 (Oversized Fee)";}` +
-                `else{base=p2Base;bdText="2 Plaques ("+pg+" pages Base: $"+p2Base+")";}` +
-            `}else if(np===3){` +
-                `var k1=normalizeKey(pSz1.value),k2=normalizeKey(pSz2.value),k3=normalizeKey(pSz3.value);` +
-                `var p1=pm[k1]||224;if(overSized.indexOf(k1)!==-1){p1+=250;isOver=true;}` +
-                `var p2=pm[k2]||224;if(overSized.indexOf(k2)!==-1){p2+=250;isOver=true;}` +
-                `var p3=pm[k3]||224;if(overSized.indexOf(k3)!==-1){p3+=250;isOver=true;}` +
-                `base=p1+p2+p3;` +
-                `bdText="P1: $"+p1+(overSized.indexOf(k1)!==-1?" [+$250 OS]":"")+" + P2: $"+p2+(overSized.indexOf(k2)!==-1?" [+$250 OS]":"")+" + P3: $"+p3+(overSized.indexOf(k3)!==-1?" [+$250 OS]":"");` +
-            `}` +
-            `if(a1>0)bdText+=" + CA/AK/HI ($25)";` +
-            `if(a2>0)bdText+=" + EVG ($30)";` +
-            `bdEl.innerHTML="<strong>Breakdown:</strong><br>"+bdText;` +
-            `if(isOver){notice.style.display='block';}else{notice.style.display='none';}` +
-            `if(base>0)document.getElementById('calc_tot').value=Math.round(base+a1+a2);` +
-        `}` +
-        `recalc();document.addEventListener('click',function eH(e){if(!box.contains(e.target)){drop.style.display='none';drop1.style.display='none';drop2.style.display='none';drop3.style.display='none';dropPages.style.display='none';}});` +
-        `chkCa.onchange=recalc;chkEvg.onchange=recalc;cancelBtn.onclick=function(){box.remove();};` +
-        `function executeApply(){` +
-            `var calcPrice=document.getElementById('calc_tot').value;var ps=document.getElementById('calc_proof_src').value;box.remove();` +
-            `var d=new Date();var utc=d.getTime()+(d.getTimezoneOffset()*60000);var phtDate=new Date(utc+(3600000*8));var shiftDate=new Date(phtDate);` +
-            `if(shiftDate.getHours()<12){shiftDate.setDate(shiftDate.getDate()-1);}` +
-            `var m=["January","February","March","April","May","June","July","August","September","October","November","December"];` +
-            `var y=shiftDate.getFullYear();var mn=m[shiftDate.getMonth()];var mm=("0"+(shiftDate.getMonth()+1)).slice(-2);var dd=("0"+shiftDate.getDate()).slice(-2);` +
-            `var opp="";var elId=document.querySelector('.uir-record-id,[class*="uir-record-id"]');if(elId){opp=elId.innerText.trim().replace(/[D]/g,'');}` +
-            `if(!opp){var tr=document.querySelector('#tranid,input[name="tranid"]');if(tr)opp=tr.value.trim();}` +
-            `var pl="/tgn-proof-pages/"+y+"/"+mn+"/"+mm+"-"+dd+"-"+y+"/"+folderName+"/"+opp;` +
-            `var pr=String(Math.round(parseFloat(calcPrice)||224));` +
-            `try{if(typeof nlapiSetFieldValue==='function'){nlapiSetFieldValue('custbody33',pr);nlapiSetFieldValue('custbodypublication_link',pl);if(calcPrice)nlapiSetFieldValue('price',calcPrice);}}catch(e){}` +
-            `function tf(s,v){var el=document.querySelector(s);if(el&&v){el.focus();el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));el.dispatchEvent(new Event('blur',{bubbles:true}));}}` +
-            `tf('#custbody33',pr);tf('input[name="custbody33"]',pr);` +
-            `tf('#custbodypublication_link',pl);tf('input[name="custbodypublication_link"]',pl);` +
-            `tf('input[id*="inpt_custbody95"]',ps);tf('input[name*="inpt_custbody95"]',ps);` +
-            `tf('input[id*="inpt_custbody163"]',ds);tf('input[name*="inpt_custbody163"]',ds);` +
-            `if(calcPrice){tf('#custbody_calculated_price',calcPrice);tf('input[name="custbody_calculated_price"]',calcPrice);}` +
-        `}` +
-        `applyBtn.onclick=executeApply;` +
-    `})();`;
+    var code = `javascript:(function(){
+        var ds = ${JSON.stringify(name)};
+        var shift = ${JSON.stringify(shift)};
+        var folderName = ${JSON.stringify(folderName)};
+        var old = document.getElementById('ns_calc_modal');
+        if (old) old.remove();
+
+        var pm = {"9x12":224,"12x14":224,"12x16":224,"12x18":224,"12x20":224,"12x24":224,"14x16":224,"14x18":224,"14x20":254,"14x28":254,"14x30":254,"15x24":254,"16x18":224,"16x20":254,"16x22":254,"16x28":254,"16x30":254,"16x36":254,"18x20":254,"18x24":254,"18x30":284,"18x36":284,"20x22":254,"20x24":254,"20x28":284,"20x40":314,"22x22":254,"22x24":254,"22x30":284,"22x34":314,"22x40":344,"24x24":314,"24x28":344,"24x30":344,"24x34":374,"24x36":374,"24x40":404,"26x28":374,"26x30":374,"26x32":404,"30x30":374,"30x34":374,"30x40":434,"22x44":624,"30x52":684,"30x54":684,"30x60":684,"30x62":684,"40x40":684,"40x42":684,"44x44":714};
+        var overSized = ["22x44","30x52","30x54","30x60","30x62","40x40","40x42","44x44"];
+
+        function normalizeKey(str) {
+            var clean = String(str||'').toLowerCase().trim().replace(/\\s+/g,'');
+            var parts = clean.split('x');
+            if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+                var n1 = parseInt(parts[0], 10);
+                var n2 = parseInt(parts[1], 10);
+                if (n1 > n2) return n2 + 'x' + n1;
+            }
+            return clean;
+        }
+
+        var box = document.createElement('div');
+        box.id = 'ns_calc_modal';
+        box.style.cssText = 'position:fixed;top:12%;right:20px;z-index:999999;background:#fff;border:2px solid #0070d2;padding:18px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-family:Sans-serif;width:290px;color:#333;';
+        
+        box.innerHTML = '<h3 style="margin:0 0 12px 0;font-size:16px;color:#0070d2;text-align:center;">Proof & Price Calculator</h3>' +
+            '<div id="calc_notice" style="display:none;background:#ffebee;border:2px solid #d93025;color:#d93025;padding:12px;border-radius:6px;font-size:13px;font-weight:bold;margin-bottom:12px;text-align:center;line-height:1.4;">NOTICE:<br>Proof in Lucinda Black & Acrylic only</div>' +
+            '<div id="single_size_container" style="position:relative;margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Plaque Size:</label><input type="text" id="calc_sz_input" value="12x18" autocomplete="off" placeholder="Type or select size..." style="width:93%;padding:7px;font-size:13px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="calc_drop" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:160px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div>' +
+            '<div style="margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Proof Source:</label><select id="calc_proof_src" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="Custom Graphic">Custom Graphic</option><option value="Online/PDF" selected>Online/PDF</option><option value="Scan/Print">Scan/Print</option><option value="Proof Made Using Weblink V2">Proof Made Using Weblink V2</option></select></div>' +
+            '<div style="margin-bottom:12px;background:#f9f9f9;padding:8px;border-radius:4px;border:1px solid #e5e5e5;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:6px;cursor:pointer;color:#0070d2;"><input type="checkbox" id="chk_enable_plaques" style="margin-right:6px;"> Number of Plaques & Pages Option</label><div id="container_plaques" style="display:none;margin-top:6px;"><div style="margin-bottom:6px;"><select id="calc_num_plaques" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="2" selected>2 Plaques</option><option value="3">3 Plaques</option></select></div><div id="pages_wrap" style="position:relative;margin-bottom:6px;"><input type="text" id="calc_pages" value="10" autocomplete="off" placeholder="Select or type pages..." style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_pages" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div id="multi_sizes_container" style="display:none;margin-top:6px;"><div style="font-size:11px;font-weight:bold;margin-bottom:4px;color:#555;">Plaque Sizes:</div><div style="position:relative;margin-bottom:6px;"><input type="text" id="p_sz_1" value="12x18" autocomplete="off" placeholder="Plaque 1 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_1" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="position:relative;margin-bottom:6px;"><input type="text" id="p_sz_2" value="12x18" autocomplete="off" placeholder="Plaque 2 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_2" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="position:relative;margin-bottom:4px;"><input type="text" id="p_sz_3" value="12x18" autocomplete="off" placeholder="Plaque 3 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_3" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div></div></div></div>' +
+            '<div style="font-size:12px;margin-bottom:12px;"><label style="display:block;margin-bottom:4px;cursor:pointer;"><input type="checkbox" id="chk_ca" value="25"> CA / AK / HI (+$25)</label><label style="display:block;cursor:pointer;"><input type="checkbox" id="chk_evg" value="30"> EVG / Partnership (+$30)</label></div>' +
+            '<div id="calc_breakdown" style="background:#eef6fc;border:1px solid #b3d7ff;border-radius:4px;padding:8px;font-size:11px;color:#004085;margin-bottom:12px;line-height:1.4;"></div>' +
+            '<label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Final Price ($):</label><input type="number" id="calc_tot" style="width:93%;padding:6px;font-size:14px;font-weight:bold;margin-bottom:14px;border-radius:4px;border:1px solid #ccc;">' +
+            '<button id="btn_apply" tabindex="0" style="width:100%;background:#0070d2;color:#fff;border:none;padding:8px;border-radius:4px;font-weight:bold;cursor:pointer;margin-bottom:6px;outline:none;">Apply to NetSuite</button>' +
+            '<button id="btn_cancel" tabindex="0" style="width:100%;background:#eee;color:#333;border:none;padding:6px;border-radius:4px;cursor:pointer;outline:none;">Cancel</button>';
+            
+        document.body.appendChild(box);
+
+        var inp = document.getElementById('calc_sz_input'), drop = document.getElementById('calc_drop'), notice = document.getElementById('calc_notice'), chkCa = document.getElementById('chk_ca'), chkEvg = document.getElementById('chk_evg'), chkEnablePlaques = document.getElementById('chk_enable_plaques'), containerPlaques = document.getElementById('container_plaques'), numPlaquesSel = document.getElementById('calc_num_plaques'), pagesInp = document.getElementById('calc_pages'), dropPages = document.getElementById('drop_pages'), singleSizeCont = document.getElementById('single_size_container'), multiSizesCont = document.getElementById('multi_sizes_container'), pagesWrap = document.getElementById('pages_wrap'), pSz1 = document.getElementById('p_sz_1'), pSz2 = document.getElementById('p_sz_2'), pSz3 = document.getElementById('p_sz_3'), drop1 = document.getElementById('drop_1'), drop2 = document.getElementById('drop_2'), drop3 = document.getElementById('drop_3'), bdEl = document.getElementById('calc_breakdown');
+
+        var banners = document.querySelectorAll('[id*="custbody_location"], .uir-field-wrapper');
+        banners.forEach(function(b){
+            var txt = (b.innerText||'').toLowerCase();
+            if (txt.indexOf('location') !== -1 || b.id.indexOf('custbody_location') !== -1) {
+                if (txt.indexOf('canada') !== -1 || txt.indexOf('alaska') !== -1 || txt.indexOf('hawaii') !== -1) chkCa.checked = true;
+                if (txt.indexOf('evg') !== -1 || txt.indexOf('partnership') !== -1) chkEvg.checked = true;
+            }
+        });
+
+        chkEnablePlaques.onchange = function(){ containerPlaques.style.display = chkEnablePlaques.checked ? 'block' : 'none'; updatePlaqueMode(); recalc(); };
+        numPlaquesSel.onchange = function(){ updatePlaqueMode(); recalc(); };
+
+        function updatePlaqueMode(){
+            var np = parseInt(numPlaquesSel.value, 10) || 2;
+            if (chkEnablePlaques.checked && np === 3) {
+                singleSizeCont.style.display = 'none';
+                multiSizesCont.style.display = 'block';
+                pagesWrap.style.display = 'none';
+            } else {
+                singleSizeCont.style.display = 'block';
+                multiSizesCont.style.display = 'none';
+                pagesWrap.style.display = 'block';
+            }
+        }
+
+        function setupDropdown(inputEl, dropEl, callback) {
+            function render(filter) {
+                var html = '';
+                var rawFilter = String(filter||'').toLowerCase().trim().replace(/\\s+/g,'');
+                var normFilter = normalizeKey(rawFilter);
+                for (var k in pm) {
+                    var parts = k.split('x');
+                    var revK = parts[1] + 'x' + parts[0];
+                    if (!rawFilter || k.indexOf(rawFilter) !== -1 || revK.indexOf(rawFilter) !== -1 || k.indexOf(normFilter) !== -1) {
+                        var singleP = pm[k] || 224;
+                        if (overSized.indexOf(k) !== -1) singleP += 250;
+                        html += '<div class="sz_opt" data-val="'+k+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+k+' ($'+Math.round(singleP)+')</div>';
+                        if (parts[0] !== parts[1]) {
+                            html += '<div class="sz_opt" data-val="'+revK+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+revK+' ($'+Math.round(singleP)+')</div>';
+                        }
+                    }
+                }
+                dropEl.innerHTML = html || '<div style="padding:6px;font-size:11px;color:#888;">No match</div>';
+                var opts = dropEl.querySelectorAll('.sz_opt');
+                for (var i = 0; i < opts.length; i++) {
+                    opts[i].onmousedown = function(e){
+                        e.preventDefault();
+                        inputEl.value = this.getAttribute('data-val');
+                        dropEl.style.display = 'none';
+                        if (callback) callback();
+                    };
+                    opts[i].onmouseover = function(){ this.style.background = '#f0f7ff'; };
+                    opts[i].onmouseout = function(){ this.style.background = '#fff'; };
+                }
+            }
+            inputEl.onfocus = function(){ render(inputEl.value); dropEl.style.display = 'block'; };
+            inputEl.oninput = function(){ render(inputEl.value); dropEl.style.display = 'block'; if (callback) callback(); };
+            inputEl.onblur = function(){ setTimeout(function(){ if (document.activeElement !== inputEl && !dropEl.contains(document.activeElement)){ dropEl.style.display = 'none'; } }, 250); };
+        }
+
+        setupDropdown(inp, drop, recalc);
+        setupDropdown(pSz1, drop1, recalc);
+        setupDropdown(pSz2, drop2, recalc);
+        setupDropdown(pSz3, drop3, recalc);
+
+        function setupPagesDropdown(){
+            function renderPages(filter){
+                var html = '';
+                for (var p = 7; p <= 18; p++) {
+                    var diff = p - 10;
+                    var pPrice = 644 + (diff * 30);
+                    if (!filter || String(p).indexOf(String(filter).trim()) !== -1) {
+                        html += '<div class="pg_opt" data-val="'+p+'" style="padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid #eee;">'+p+' Pages ($'+pPrice+')</div>';
+                    }
+                }
+                dropPages.innerHTML = html || '<div style="padding:6px;font-size:11px;color:#888;">No match</div>';
+                var opts = dropPages.querySelectorAll('.pg_opt');
+                for (var i = 0; i < opts.length; i++) {
+                    opts[i].onmousedown = function(e){
+                        e.preventDefault();
+                        pagesInp.value = this.getAttribute('data-val');
+                        dropPages.style.display = 'none';
+                        recalc();
+                    };
+                    opts[i].onmouseover = function(){ this.style.background = '#f0f0ff'; };
+                    opts[i].onmouseout = function(){ this.style.background = '#fff'; };
+                }
+            }
+            pagesInp.onfocus = function(){ renderPages(pagesInp.value); dropPages.style.display = 'block'; };
+            pagesInp.oninput = function(){ renderPages(pagesInp.value); dropPages.style.display = 'block'; recalc(); };
+            pagesInp.onblur = function(){ setTimeout(function(){ if (document.activeElement !== pagesInp && !dropPages.contains(document.activeElement)){ dropPages.style.display = 'none'; } }, 250); };
+        }
+
+        setupPagesDropdown();
+
+        var applyBtn = document.getElementById('btn_apply'), cancelBtn = document.getElementById('btn_cancel');
+
+        function recalc(){
+            var np = parseInt(numPlaquesSel.value, 10) || 2;
+            var isOver = false;
+            var bdText = "";
+            var base = 0;
+            var a1 = chkCa.checked ? 25 : 0;
+            var a2 = chkEvg.checked ? 30 : 0;
+
+            if (!chkEnablePlaques.checked) {
+                var k = normalizeKey(inp.value);
+                var rawP = pm[k] || 224;
+                if (overSized.indexOf(k) !== -1) { isOver = true; base = rawP + 250; bdText = "Base Price ($" + rawP + ") + $250 (Oversized Fee)"; }
+                else { base = rawP; bdText = "Base Price ($" + rawP + ")"; }
+            } else if (np === 2) {
+                var k = normalizeKey(inp.value);
+                var pg = parseInt(pagesInp.value, 10) || 10;
+                var diff = pg - 10;
+                var p2Base = 644 + (diff * 30);
+                if (overSized.indexOf(k) !== -1) { isOver = true; base = p2Base + 250; bdText = "2 Plaques (" + pg + " pgs: $" + p2Base + ") + $250 (Oversized Fee)"; }
+                else { base = p2Base; bdText = "2 Plaques (" + pg + " pages Base: $" + p2Base + ")"; }
+            } else if (np === 3) {
+                var k1 = normalizeKey(pSz1.value), k2 = normalizeKey(pSz2.value), k3 = normalizeKey(pSz3.value);
+                var p1 = pm[k1] || 224; if (overSized.indexOf(k1) !== -1) { p1 += 250; isOver = true; }
+                var p2 = pm[k2] || 224; if (overSized.indexOf(k2) !== -1) { p2 += 250; isOver = true; }
+                var p3 = pm[k3] || 224; if (overSized.indexOf(k3) !== -1) { p3 += 250; isOver = true; }
+                base = p1 + p2 + p3;
+                bdText = "P1: $" + p1 + (overSized.indexOf(k1) !== -1 ? " [+$250 OS]" : "") + " + P2: $" + p2 + (overSized.indexOf(k2) !== -1 ? " [+$250 OS]" : "") + " + P3: $" + p3 + (overSized.indexOf(k3) !== -1 ? " [+$250 OS]" : "");
+            }
+
+            if (a1 > 0) bdText += " + CA/AK/HI ($25)";
+            if (a2 > 0) bdText += " + EVG ($30)";
+            bdEl.innerHTML = "<strong>Breakdown:</strong><br>" + bdText;
+            if (isOver) { notice.style.display = 'block'; } else { notice.style.display = 'none'; }
+            if (base > 0) document.getElementById('calc_tot').value = Math.round(base + a1 + a2);
+        }
+
+        recalc();
+
+        document.addEventListener('click', function eH(e){
+            if (!box.contains(e.target)) {
+                drop.style.display = 'none';
+                drop1.style.display = 'none';
+                drop2.style.display = 'none';
+                drop3.style.display = 'none';
+                dropPages.style.display = 'none';
+            }
+        });
+
+        chkCa.onchange = recalc;
+        chkEvg.onchange = recalc;
+        cancelBtn.onclick = function(){ box.remove(); };
+
+        function executeApply(){
+            var calcPrice = document.getElementById('calc_tot').value;
+            var ps = document.getElementById('calc_proof_src').value;
+            box.remove();
+
+            var d = new Date();
+            var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+            var phtDate = new Date(utc + (3600000 * 8));
+            var shiftDate = new Date(phtDate);
+
+            if (shiftDate.getHours() < 12) {
+                shiftDate.setDate(shiftDate.getDate() - 1);
+            }
+
+            var m = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            var y = shiftDate.getFullYear();
+            var mn = m[shiftDate.getMonth()];
+            var mm = ("0" + (shiftDate.getMonth() + 1)).slice(-2);
+            var dd = ("0" + shiftDate.getDate()).slice(-2);
+
+            var opp = "";
+            var elId = document.querySelector('.uir-record-id,[class*="uir-record-id"]');
+            if (elId) { opp = elId.innerText.trim().replace(/[D]/g, ''); }
+            if (!opp) {
+                var tr = document.querySelector('#tranid,input[name="tranid"]');
+                if (tr) opp = tr.value.trim();
+            }
+
+            var pl = "/tgn-proof-pages/" + y + "/" + mn + "/" + mm + "-" + dd + "-" + y + "/" + folderName + "/" + opp;
+            var pr = String(Math.round(parseFloat(calcPrice) || 224));
+
+            try {
+                if (typeof nlapiSetFieldValue === 'function') {
+                    nlapiSetFieldValue('custbody33', pr);
+                    nlapiSetFieldValue('custbodypublication_link', pl);
+                    nlapiSetFieldValue('custbody95', ps);
+                    nlapiSetFieldValue('custbody163', ds);
+                    if (calcPrice) nlapiSetFieldValue('price', calcPrice);
+                }
+            } catch(e) {}
+
+            function tf(s, v) {
+                var el = document.querySelector(s);
+                if (el && v) {
+                    el.focus();
+                    el.value = v;
+                    el.dispatchEvent(new Event('input', { bubbles: true }));
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                    el.dispatchEvent(new Event('blur', { bubbles: true }));
+                }
+            }
+
+            tf('#custbody33', pr);
+            tf('input[name="custbody33"]', pr);
+            tf('#custbodypublication_link', pl);
+            tf('input[name="custbodypublication_link"]', pl);
+            tf('input[id*="inpt_custbody95"]', ps);
+            tf('input[name*="inpt_custbody95"]', ps);
+            tf('input[id*="inpt_custbody163"]', ds);
+            tf('input[name*="inpt_custbody163"]', ds);
+
+            if (calcPrice) {
+                tf('#custbody_calculated_price', calcPrice);
+                tf('input[name="custbody_calculated_price"]', calcPrice);
+            }
+        }
+
+        applyBtn.onclick = executeApply;
+    })();`;
 
     var btn = document.getElementById('dynamic_bookmark');
-    btn.href = code;
+    btn.href = code.replace(/\n\s*/g, ''); // Compacts the bookmark code safely into a bookmarkable URL
     btn.innerText = "⚡ Calculator — " + name + " (" + shift + ") [designer]";
 }
 
