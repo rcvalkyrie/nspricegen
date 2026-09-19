@@ -255,8 +255,8 @@ function updateBookmark() {
 
     var folderName = name;
     if (rawLink) {
-        var cleanPath = rawLink.replace(/\/+$\vert{}\?.*$/g, '');
-        var parts = cleanPath.split('/');
+        var cleanPath = rawLink.split('?')[0].split('#')[0];
+        var parts = cleanPath.split('/').filter(function(p) { return p.length > 0; });
         var extracted = parts.pop();
         if (extracted) {
             folderName = extracted;
