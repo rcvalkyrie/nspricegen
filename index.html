@@ -218,10 +218,11 @@
     </div>
 
     <div class="form-group">
-        <label>Select Your Shift:</label>
+        <label>Select Your Team:</label>
         <select id="shift_option" onchange="updateBookmark()">
-            <option value="PM" selected>PM</option>
             <option value="AM">AM</option>
+            <option value="PM" selected>PM</option>
+            <option value="Weblead">Weblead</option>
         </select>
     </div>
 
@@ -238,7 +239,7 @@
     <div class="instructions">
         <h4>📖 How to Setup & Use</h4>
         <ol>
-            <li><strong>Initial Setup:</strong> Select your name, shift, and paste the field path (preserves case-sensitivity). Drag the orange button directly to your browser's Bookmarks Bar.</li>
+            <li><strong>Initial Setup:</strong> Select your name, team, and paste the field path (preserves case-sensitivity). Drag the orange button directly to your browser's Bookmarks Bar.</li>
             <li><strong>Opening in NetSuite:</strong> Open any NetSuite Opportunity or Quote record, then click your <strong>⚡ Calculator</strong> bookmark.</li>
             <li><strong>Calculating Prices:</strong> Select or type plaque sizes and proof source. The tool auto-detects location fees (Canada / AK / HI), EVG / Partnership fees, and oversized dimensions.</li>
             <li><strong>Applying Values:</strong> Click <strong>Apply to NetSuite</strong> to automatically fill in the price, designer name, proof source, and publication link path.</li>
@@ -262,10 +263,13 @@ function updateBookmark() {
         }
     }
 
+    var defaultProofSource = (shift === 'Weblead') ? 'Proof Made Using Weblink V2' : 'Online/PDF';
+
     var code = `javascript:(function(){
         var ds = ${JSON.stringify(name)};
         var shift = ${JSON.stringify(shift)};
         var folderName = ${JSON.stringify(folderName)};
+        var defaultProofSrc = ${JSON.stringify(defaultProofSource)};
         var old = document.getElementById('ns_calc_modal');
         if (old) old.remove();
 
@@ -290,7 +294,7 @@ function updateBookmark() {
         box.innerHTML = '<h3 style="margin:0 0 12px 0;font-size:16px;color:#0070d2;text-align:center;">Proof & Price Calculator</h3>' +
             '<div id="calc_notice" style="display:none;background:#ffebee;border:2px solid #d93025;color:#d93025;padding:12px;border-radius:6px;font-size:13px;font-weight:bold;margin-bottom:12px;text-align:center;line-height:1.4;">NOTICE:<br>Proof in Lucinda Black & Acrylic only</div>' +
             '<div id="single_size_container" style="position:relative;margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Plaque Size:</label><input type="text" id="calc_sz_input" value="12x18" autocomplete="off" placeholder="Type or select size..." style="width:93%;padding:7px;font-size:13px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="calc_drop" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:160px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div>' +
-            '<div style="margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Proof Source:</label><select id="calc_proof_src" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="Custom Graphic">Custom Graphic</option><option value="Online/PDF" selected>Online/PDF</option><option value="Scan/Print">Scan/Print</option><option value="Proof Made Using Weblink V2">Proof Made Using Weblink V2</option></select></div>' +
+            '<div style="margin-bottom:12px;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:4px;">Proof Source:</label><select id="calc_proof_src" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="Custom Graphic">Custom Graphic</option><option value="Online/PDF">Online/PDF</option><option value="Scan/Print">Scan/Print</option><option value="Proof Made Using Weblink V2">Proof Made Using Weblink V2</option></select></div>' +
             '<div style="margin-bottom:12px;background:#f9f9f9;padding:8px;border-radius:4px;border:1px solid #e5e5e5;"><label style="font-size:12px;font-weight:bold;display:block;margin-bottom:6px;cursor:pointer;color:#0070d2;"><input type="checkbox" id="chk_enable_plaques" style="margin-right:6px;"> Number of Plaques & Pages Option</label><div id="container_plaques" style="display:none;margin-top:6px;"><div style="margin-bottom:6px;"><select id="calc_num_plaques" style="width:100%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;"><option value="2" selected>2 Plaques</option><option value="3">3 Plaques</option></select></div><div id="pages_wrap" style="position:relative;margin-bottom:6px;"><input type="text" id="calc_pages" value="10" autocomplete="off" placeholder="Select or type pages..." style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_pages" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div id="multi_sizes_container" style="display:none;margin-top:6px;"><div style="font-size:11px;font-weight:bold;margin-bottom:4px;color:#555;">Plaque Sizes:</div><div style="position:relative;margin-bottom:6px;"><input type="text" id="p_sz_1" value="12x18" autocomplete="off" placeholder="Plaque 1 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_1" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="position:relative;margin-bottom:6px;"><input type="text" id="p_sz_2" value="12x18" autocomplete="off" placeholder="Plaque 2 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_2" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div><div style="position:relative;margin-bottom:4px;"><input type="text" id="p_sz_3" value="12x18" autocomplete="off" placeholder="Plaque 3 Size" style="width:93%;padding:6px;font-size:12px;border-radius:4px;border:1px solid #ccc;outline:none;"><div id="drop_3" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:140px;overflow-y:auto;background:#fff;border:1px solid #0070d2;border-radius:4px;z-index:1000;box-shadow:0 4px 8px rgba(0,0,0,0.15);"></div></div></div></div></div>' +
             '<div style="font-size:12px;margin-bottom:12px;"><label style="display:block;margin-bottom:4px;cursor:pointer;"><input type="checkbox" id="chk_ca" value="25"> CA / AK / HI (+$25)</label><label style="display:block;cursor:pointer;"><input type="checkbox" id="chk_evg" value="30"> EVG / Partnership (+$30)</label></div>' +
             '<div id="calc_breakdown" style="background:#eef6fc;border:1px solid #b3d7ff;border-radius:4px;padding:8px;font-size:11px;color:#004085;margin-bottom:12px;line-height:1.4;"></div>' +
@@ -299,6 +303,9 @@ function updateBookmark() {
             '<button id="btn_cancel" tabindex="0" style="width:100%;background:#eee;color:#333;border:none;padding:6px;border-radius:4px;cursor:pointer;outline:none;">Cancel</button>';
             
         document.body.appendChild(box);
+
+        var proofSelect = document.getElementById('calc_proof_src');
+        if (proofSelect) proofSelect.value = defaultProofSrc;
 
         var inp = document.getElementById('calc_sz_input'), drop = document.getElementById('calc_drop'), notice = document.getElementById('calc_notice'), chkCa = document.getElementById('chk_ca'), chkEvg = document.getElementById('chk_evg'), chkEnablePlaques = document.getElementById('chk_enable_plaques'), containerPlaques = document.getElementById('container_plaques'), numPlaquesSel = document.getElementById('calc_num_plaques'), pagesInp = document.getElementById('calc_pages'), dropPages = document.getElementById('drop_pages'), singleSizeCont = document.getElementById('single_size_container'), multiSizesCont = document.getElementById('multi_sizes_container'), pagesWrap = document.getElementById('pages_wrap'), pSz1 = document.getElementById('p_sz_1'), pSz2 = document.getElementById('p_sz_2'), pSz3 = document.getElementById('p_sz_3'), drop1 = document.getElementById('drop_1'), drop2 = document.getElementById('drop_2'), drop3 = document.getElementById('drop_3'), bdEl = document.getElementById('calc_breakdown');
 
@@ -451,6 +458,63 @@ function updateBookmark() {
         chkEvg.onchange = recalc;
         cancelBtn.onclick = function(){ box.remove(); };
 
+        function setNsSelectField(fieldId, targetText) {
+            if (typeof nlapiSetFieldValue === 'function') {
+                try { nlapiSetFieldValue(fieldId, targetText); } catch(e){}
+            }
+
+            var textInput = document.querySelector('input[id*="inpt_' + fieldId + '"]') || document.querySelector('input[name*="inpt_' + fieldId + '"]');
+            var hiddenInput = document.querySelector('input[name="' + fieldId + '"]') || document.querySelector('#' + fieldId);
+
+            if (textInput) {
+                textInput.focus();
+                textInput.value = targetText;
+                textInput.dispatchEvent(new Event('input', { bubbles: true }));
+                textInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+                if (typeof NLDropdown !== 'undefined' && NLDropdown.get) {
+                    try {
+                        var dropdown = NLDropdown.get(textInput);
+                        if (dropdown) {
+                            var item = dropdown.findItemByText(targetText);
+                            if (item) {
+                                dropdown.select(item);
+                                return;
+                            }
+                        }
+                    } catch(err) {}
+                }
+
+                var options = document.querySelectorAll('.dropdownDiv div, .uir-select-option, [id*="' + fieldId + '_popup"] div');
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].textContent.trim().toLowerCase() === targetText.trim().toLowerCase()) {
+                        options[i].click();
+                        return;
+                    }
+                }
+
+                if (hiddenInput) {
+                    var nsDropdown = textInput.getAttribute('dropdown');
+                    if (nsDropdown && window[nsDropdown]) {
+                        try {
+                            var opts = window[nsDropdown].values || [];
+                            for (var j = 0; j < opts.length; j++) {
+                                if (opts[j] && (opts[j].text === targetText || opts[j].label === targetText)) {
+                                    hiddenInput.value = opts[j].value;
+                                    break;
+                                }
+                            }
+                        } catch(e) {}
+                    }
+                }
+
+                textInput.dispatchEvent(new Event('blur', { bubbles: true }));
+            } else if (hiddenInput) {
+                hiddenInput.value = targetText;
+                hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        }
+
         function executeApply(){
             var calcPrice = document.getElementById('calc_tot').value;
             var ps = document.getElementById('calc_proof_src').value;
@@ -461,7 +525,7 @@ function updateBookmark() {
             var phtDate = new Date(utc + (3600000 * 8));
             var shiftDate = new Date(phtDate);
 
-            if (shiftDate.getHours() < 12) {
+            if ((shift === 'PM' || shift === 'Weblead') && shiftDate.getHours() < 12) {
                 shiftDate.setDate(shiftDate.getDate() - 1);
             }
 
@@ -486,8 +550,6 @@ function updateBookmark() {
                 if (typeof nlapiSetFieldValue === 'function') {
                     nlapiSetFieldValue('custbody33', pr);
                     nlapiSetFieldValue('custbodypublication_link', pl);
-                    nlapiSetFieldValue('custbody95', ps);
-                    nlapiSetFieldValue('custbody163', ds);
                     if (calcPrice) nlapiSetFieldValue('price', calcPrice);
                 }
             } catch(e) {}
@@ -507,10 +569,9 @@ function updateBookmark() {
             tf('input[name="custbody33"]', pr);
             tf('#custbodypublication_link', pl);
             tf('input[name="custbodypublication_link"]', pl);
-            tf('input[id*="inpt_custbody95"]', ps);
-            tf('input[name*="inpt_custbody95"]', ps);
-            tf('input[id*="inpt_custbody163"]', ds);
-            tf('input[name*="inpt_custbody163"]', ds);
+
+            setNsSelectField('custbody95', ps);
+            setNsSelectField('custbody163', ds);
 
             if (calcPrice) {
                 tf('#custbody_calculated_price', calcPrice);
@@ -522,7 +583,7 @@ function updateBookmark() {
     })();`;
 
     var btn = document.getElementById('dynamic_bookmark');
-    btn.href = code.replace(/\n\s*/g, ''); // Compacts the bookmark code safely into a bookmarkable URL
+    btn.href = code.replace(/\n\s*/g, '');
     btn.innerText = "⚡ Calculator — " + name + " (" + shift + ") [designer]";
 }
 
